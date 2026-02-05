@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Парасат Мешіті</title>
+    <style>
+        /* --- ЗАЩИТА --- */
+        * {
+            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
+            -webkit-user-drag: none;
+        }
+        a, button, .donate-card, .address-link, .lang-switch { pointer-events: auto; }
+
+        /* --- ЦВЕТА --- */
+        :root {
+            --emerald: #004d2e;
+            --gold: #d4af37;
+            --bronze: #b38728;
+            --sand: #fdfcf5;
+            --gold-gradient: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7);
+        }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, serif;
+            background-color: var(--sand); color: #222; overflow-x: hidden;
+            background-image: radial-gradient(circle at center, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+            background-size: 100% 100%;
+            animation: bgPulse 10s infinite alternate;
+        }
+        @keyframes bgPulse { 0% { background-size: 100% 100%; } 100% { background-size: 110% 110%; } }
+
+        /* --- КУРСОР --- */
+        @media (hover: hover) {
+            .cursor-follower {
+                position: fixed; width: 30px; height: 30px; background: rgba(212, 175, 55, 0.4);
+                border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.1s ease-out;
+                filter: blur(5px); mix-blend-mode: screen;
+            }
+        }
+
+        /* --- БОРДЮРЫ --- */
+        .ornament-border-top, .ornament-border-bottom {
+            height: 35px; width: 100%;
+            background-color: var(--bronze);
+            background-image: linear-gradient(135deg, var(--gold) 25%, transparent 25%), 
+                              linear-gradient(225deg, var(--gold) 25%, transparent 25%), 
+                              linear-gradient(45deg, var(--gold) 25%, transparent 25%), 
+                              linear-gradient(315deg, var(--gold) 25%, transparent 25%);
+            background-position: 10px 0; background-size: 20px 20px; opacity: 0.8;
+        }
+
+        /* --- ВСЕ АНИМАЦИИ --- */
+        @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes gentlePulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); box-shadow: 0 25px 50px rgba(212, 175, 55, 0.4); } 100% { transform: scale(1); } }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        @keyframes zoomHero { 0% { transform: scale(1); } 100% { transform: scale(1.2); } }
+        
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 1s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- МОДАЛЬНОЕ ОКНО --- */
+        .thank-you-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 77, 46, 0.95); backdrop-filter: blur(15px);
+            display: flex; justify-content: center; align-items: center; z-index: 10000;
+            opacity: 0; pointer-events: none; transition: 0.5s;
+        }
+        .thank-you-modal.active { opacity: 1; pointer-events: all; }
+        .thank-you-content {
+            background: white; padding: 50px; border-radius: 40px; text-align: center;
+            border: 5px solid var(--gold); box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+            transform: scale(0.7) rotate(-10deg); transition: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .thank-you-modal.active .thank-you-content { transform: scale(1) rotate(0deg); }
+        .thank-you-icon { font-size: 80px; display: block; margin-bottom: 20px; animation: float 3s infinite; }
+        .thank-you-text h2 { color: var(--emerald); margin: 0 0 15px; font-size: 32px; }
+
+        /* --- ШАПКА --- */
+        header {
+            background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
+            padding: 15px 20px; position: sticky; top: 0; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 3px solid var(--gold); animation: slideDown 1s ease-out;
+        }
+        .logo { font-size: 20px; font-weight: 800; color: var(--emerald); display: flex; align-items: center; gap: 8px; }
+        .logo span { font-size: 28px; color: var(--gold); }
+        .lang-switch { border: 2px solid var(--gold); color: var(--emerald); background: none; padding: 6px 12px; border-radius: 15px; font-weight: bold; cursor: pointer; }
+
+        /* --- ГЕРОЙ (С АНИМАЦИЕЙ ФОТО) --- */
+        .hero {
+            position: relative; height: 70vh; min-height: 500px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; color: white; overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('main.jpg'); 
+            background-size: cover; background-position: center;
+            filter: brightness(0.5); z-index: -1;
+            /* ВОТ АНИМАЦИЯ ПРИБЛИЖЕНИЯ (20 секунд) */
+            animation: zoomHero 20s infinite alternate linear;
+        }
+        .hero-content-wrapper { animation: slideUp 1.5s ease-out 0.5s backwards; }
+        .bismillah { font-family: serif; color: var(--gold); font-size: 36px; margin-bottom: 25px; text-shadow: 0 2px 15px black; }
+        .hero h1 {
+            font-size: 50px; font-weight: 900; text-transform: uppercase; margin: 0;
+            border: 4px solid var(--gold); padding: 25px 50px;
+            background: rgba(0, 77, 46, 0.7); backdrop-filter: blur(8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        /* --- О НАС --- */
+        .about-section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
+        .about-grid { display: flex; gap: 50px; align-items: center; flex-wrap: wrap; }
+        
+        .about-img-box {
+            flex: 1; min-width: 300px; height: 450px;
+            background-image: url('about.jpg'); background-size: cover; background-position: center;
+            border-radius: 200px 200px 30px 30px;
+            border: 6px solid var(--gold); animation: gentlePulse 5s infinite ease-in-out; 
+        }
+        .about-text { flex: 1.2; min-width: 300px; }
+        .about-text h2 { 
+            color: var(--emerald); font-size: 40px; margin-top: 0; 
+            border-left: 6px solid var(--gold); padding-left: 20px;
+            background: linear-gradient(to right, rgba(212, 175, 55, 0.1), transparent);
+        }
+        .about-text p { font-size: 18px; line-height: 1.9; color: #333; text-align: justify; margin-bottom: 20px; }
+        .highlight-gold { color: #b38728; font-weight: bold; }
+        .address-link {
+            display: flex; align-items: center; gap: 15px; background: white; padding: 20px;
+            border-radius: 20px; border: 3px solid var(--gold); color: var(--emerald);
+            text-decoration: none; font-weight: bold; margin-top: 30px; font-size: 18px;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2); transition: 0.3s;
+        }
+        .address-link:hover { transform: translateY(-5px); }
+
+        /* --- ДОНАТЫ --- */
+        .donate-section { background: white; padding: 80px 20px; text-align: center; }
+        .section-title { font-size: 38px; color: var(--emerald); margin-bottom: 60px; font-weight: 800; }
+
+        .donate-card {
+            background: white; width: 100%; max-width: 340px; border-radius: 35px; padding: 50px 25px;
+            box-shadow: 0 20px 50px rgba(0, 77, 46, 0.15); border: 4px solid var(--gold);
+            animation: float 7s ease-in-out infinite; position: relative; overflow: hidden;
+        }
+        .donate-card:nth-child(2) { animation-delay: 3.5s; }
+        
+        .qr-box { 
+            width: 200px; height: 200px; background: #eee; margin: 0 auto 25px; 
+            display: flex; align-items: center; justify-content: center; 
+            border-radius: 25px; border: 4px dashed var(--emerald); 
+            font-weight: bold; color: var(--emerald); overflow: hidden;
+        }
+        
+        .btn-gold {
+            display: block; width: 100%; padding: 20px 0;
+            background: var(--gold-gradient); background-size: 200% auto;
+            color: var(--emerald); font-weight: 900; text-decoration: none; border-radius: 50px;
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.5); border: none; cursor: pointer; font-size: 22px;
+            transition: 0.4s;
+        }
+        .btn-gold:hover { background-position: right center; transform: scale(1.05); }
+
+        footer { background: var(--emerald); color: #e0e0e0; text-align: center; padding: 50px 20px; font-size: 18px; }
+    </style>
+</head>
+<body>
+
+    <div class="cursor-follower"></div>
+
+    <div class="thank-you-modal" id="thankYouModal">
+        <div class="thank-you-content">
+            <span class="thank-you-icon">🤲✨</span>
+            <div class="thank-you-text" id="thankYouText">
+                <h2>Алла разы болсын!</h2>
+                <p>Садақаңыз қабыл болсын.</p>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo"><span>☪</span> ПАРАСАТ</div>
+        <button class="lang-switch" onclick="toggleLang()">🇰🇿 / 🇷🇺</button>
+    </header>
+
+    <div class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content-wrapper">
+            <div class="bismillah">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+            <h1>ПАРАСАТ МЕШІТІ</h1>
+        </div>
+    </div>
+
+    <div class="ornament-border-top"></div>
+    
+    <section class="about-section">
+        <div class="about-grid">
+            <div class="about-img-box reveal"></div>
+            <div class="about-text reveal">
+                <h2 id="about-head">Біз туралы</h2>
+                <div id="about-desc">
+                    <p><span class="highlight-gold">"Парасат" мешіті</span> — Атырау қаласының рухани жүрегі, имандылық пен ғылымның алтын көпірі. Бұл — жай ғана ғимарат емес, Алланың жердегі үйі.</p>
+                    <p>Біздің мақсатымыз — қоғамда <span class="highlight-gold">бірлік пен татулықты</span> нығайту, жастарды имандылыққа тәрбиелеу және мұқтаж жандарға қол ұшын созу.</p>
+                    <p>Әрбір жұма күні білікті имамдарымыз жүрекке жылы уағыздар айтып, жамағаттың рухани сұранысын өтейді. Есігіміз баршаңызға ашық!</p>
+                </div>
+                <a href="https://2gis.kz/atyrau/firm/70000001100040750" target="_blank" class="address-link">
+                    📍 <span id="addr-text">Атырау, К. Ахмедияров 5 (Картаны ашу)</span>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <div class="ornament-border-bottom"></div>
+
+    <section class="donate-section" id="donate">
+        <h2 class="section-title reveal" id="donate-head">Садақа жасау</h2>
+        <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+            
+            <div class="donate-card reveal">
+                <div class="card-content">
+                    <h3>Halyk QR</h3>
+                    <p id="txt-halyk">Суретке түсіріңіз</p>
+                    <div class="qr-box">
+                        <img src="halyk.jpg" width="100%" style="border-radius: 15px;">
+                    </div>
+                    <button class="btn-gold" onclick="showThankYou(null)" id="btn-halyk">Сканерлеу</button>
+                </div>
+            </div>
+
+            <div class="donate-card reveal">
+                 <div class="card-content">
+                    <h3>Kaspi QR</h3>
+                    <p id="txt-qr">Суретке түсіріңіз</p>
+                    <div class="qr-box">
+                        <img src="kaspi.jpg" width="100%" style="border-radius: 15px;">
+                    </div>
+                    <button class="btn-gold" onclick="showThankYou(null)" id="btn-scan">Сканерлеу</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Парасат Мешіті. Барлық құқықтар қорғалған.</p>
+    </footer>
+
+    <script>
+        function showThankYou(url) {
+            const modal = document.getElementById('thankYouModal');
+            modal.classList.add('active');
+            setTimeout(() => {
+                modal.classList.remove('active');
+                if (url) window.location.href = url;
+            }, 3500);
+        }
+
+        const cursor = document.querySelector('.cursor-follower');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.transform = `translate3d(${e.clientX - 15}px, ${e.clientY - 15}px, 0)`;
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        let isKz = true;
+        const texts = {
+            kz: {
+                aboutHead: "Біз туралы",
+                aboutDesc: `<p><span class="highlight-gold">"Парасат" мешіті</span> — Атырау қаласының рухани жүрегі, имандылық пен ғылымның алтын көпірі. Бұл — жай ғана ғимарат емес, Алланың жердегі үйі.</p><p>Біздің мақсатымыз — қоғамда <span class="highlight-gold">бірлік пен татулықты</span> нығайту, жастарды имандылыққа тәрбиелеу және мұқтаж жандарға қол ұшын созу.</p><p>Әрбір жұма күні білікті имамдарымыз жүрекке жылы уағыздар айтып, жамағаттың рухани сұранысын өтейді. Есігіміз баршаңызға ашық!</p>`,
+                addr: "Атырау, К. Ахмедияров 5 (Картаны ашу)", donateHead: "Садақа жасау", 
+                txtHalyk: "Суретке түсіріңіз", btnHalyk: "Сканерлеу", 
+                txtQr: "Суретке түсіріңіз", btnScan: "Сканерлеу", thanksTitle: "Алла разы болсын!", thanksText: "Садақаңыз қабыл болсын."
+            },
+            ru: {
+                aboutHead: "О нас",
+                aboutDesc: `<p><span class="highlight-gold">Мечеть «Парасат»</span> — это духовное сердце Атырау, золотой мост веры и знания. Это не просто здание, это дом Аллаха на земле.</p><p>Наша цель — укреплять <span class="highlight-gold">единство и согласие</span> в обществе, воспитывать молодежь в духе веры и протягивать руку помощи нуждающимся.</p><p>Каждую пятницу наши квалифицированные имамы читают проникновенные проповеди, удовлетворяя духовные потребности джамаата. Наши двери открыты для всех!</p>`,
+                addr: "Атырау, ул. К. Ахмедиярова 5 (Открыть карту)", donateHead: "Пожертвование", 
+                txtHalyk: "Сканируйте фото", btnHalyk: "Сканировать", 
+                txtQr: "Сканируйте фото", btnScan: "Сканировать", thanksTitle: "Пусть Аллах будет доволен!", thanksText: "Пусть ваша садака будет принята."
+            }
+        };
+        function toggleLang() {
+            isKz = !isKz; const t = isKz ? texts.kz : texts.ru;
+            document.getElementById('about-head').innerText = t.aboutHead; document.getElementById('about-desc').innerHTML = t.aboutDesc; document.getElementById('addr-text').innerText = t.addr; document.getElementById('donate-head').innerText = t.donateHead; 
+            document.getElementById('txt-halyk').innerText = t.txtHalyk; document.getElementById('btn-halyk').innerText = t.btnHalyk;
+            document.getElementById('txt-qr').innerText = t.txtQr; document.getElementById('btn-scan').innerText = t.btnScan;
+            document.querySelector('#thankYouText h2').innerText = t.thanksTitle; document.querySelector('#thankYouText p').innerText = t.thanksText;
+        }
+    </script>
+</body><script>
+document.addEventListener('keydown', function(e) {
+    if (
+        (e.ctrlKey && ['c','u','s'].includes(e.key.toLowerCase())) ||
+        e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && ['i','j','c'].includes(e.key.toLowerCase()))
+    ) {
+        e.preventDefault();
+        return false;
+    }
+});
+</script>
+</body>
+</html>
