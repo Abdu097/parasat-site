@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Парасат Мешіті</title>
     <style>
+        /* --- ГЛАВНАЯ НАСТРОЙКА --- */
+        html { scroll-behavior: smooth; } /* Плавная прокрутка */
+
         /* --- ЗАЩИТА --- */
         * { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; -webkit-user-drag: none; }
         a, button, .donate-card, .address-link, .lang-switch { pointer-events: auto; }
@@ -74,7 +77,7 @@
 
         /* --- ГЕРОЙ --- */
         .hero {
-            position: relative; height: 80vh; min-height: 600px;
+            position: relative; height: 85vh; min-height: 650px;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center; color: white; overflow: hidden;
         }
@@ -85,11 +88,10 @@
         }
         .hero-content-wrapper { 
             animation: slideUp 1.5s ease-out 0.5s backwards;
-            display: flex; flex-direction: column; align-items: center;
+            display: flex; flex-direction: column; align-items: center; width: 90%; max-width: 800px;
         }
         .bismillah { font-family: serif; color: var(--gold); font-size: 36px; margin-bottom: 20px; text-shadow: 0 2px 15px black; }
         
-        /* КРАСИВЫЙ ШРИФТ ЗАГОЛОВКА */
         .hero h1 {
             font-family: 'Georgia', 'Times New Roman', serif;
             font-size: 52px; font-weight: 900; text-transform: uppercase; margin: 0;
@@ -99,18 +101,44 @@
             letter-spacing: 2px;
         }
 
-        /* НОВЫЙ ТЕКСТ ПОД ЗАГОЛОВКОМ */
+        /* --- НОВЫЙ БОЛЬШОЙ ТЕКСТ И КНОПКА --- */
         .hero-subtitle {
-            color: #fbf5b7; /* Светлое золото */
-            font-size: 20px;
+            color: #fbf5b7;
+            font-size: 24px; /* Увеличил шрифт */
             margin-top: 30px;
             font-weight: 600;
-            text-shadow: 0 2px 8px rgba(0,0,0,1); /* Тень чтобы читалось на фото */
-            max-width: 90%; line-height: 1.6;
-            background: rgba(0,0,0,0.3); padding: 10px 20px; border-radius: 20px; /* Подложка */
-            backdrop-filter: blur(3px);
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            text-shadow: 0 3px 10px rgba(0,0,0,1);
+            line-height: 1.5;
+            background: rgba(0,0,0,0.4); padding: 15px 30px; border-radius: 20px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(212, 175, 55, 0.4);
         }
+        
+        /* КНОПКА НА ГЛАВНОМ ЭКРАНЕ */
+        .hero-btn {
+            margin-top: 20px;
+            background: var(--gold-gradient);
+            color: var(--emerald);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 900;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6);
+            transition: 0.3s;
+            animation: pulseBtn 2s infinite;
+            border: 2px solid white;
+        }
+        .hero-btn:hover { transform: scale(1.1); box-shadow: 0 15px 40px rgba(212, 175, 55, 0.8); }
+        @keyframes pulseBtn { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        /* АДАПТАЦИЯ ПОД ТЕЛЕФОН */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 32px; padding: 15px 20px; }
+            .hero-subtitle { font-size: 18px; padding: 15px; }
+            .hero-btn { font-size: 18px; padding: 12px 30px; }
+        }
+
 
         /* --- О НАС --- */
         .about-section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
@@ -149,8 +177,6 @@
         .donate-card:nth-child(2) { animation-delay: 3.5s; }
         
         .card-content { width: 100%; }
-
-        /* Стиль для QR коробки */
         .qr-box { 
             width: 200px; height: 200px; background: #eee; margin: 15px auto; 
             display: flex; align-items: center; justify-content: center; 
@@ -167,11 +193,7 @@
         }
         .btn-gold:hover { background-position: right center; transform: scale(1.05); }
 
-        /* Специальная кнопка-ссылка */
-        .btn-link {
-            text-decoration: none; display: flex; align-items: center; justify-content: center;
-        }
-
+        .btn-link { text-decoration: none; display: flex; align-items: center; justify-content: center; }
         .separator { margin: 20px 0; border-top: 1px solid #ddd; position: relative; }
         .separator span { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: white; padding: 0 10px; color: #999; font-size: 14px; }
 
@@ -208,6 +230,11 @@
                 Осы жұманың берекесі сіздің отбасыңызға болсын.<br>
                 Садақа беру үшін сілтемеге өтіңіз.
             </p>
+
+            <a href="#donate" class="hero-btn" id="btn-hero">
+                Сілтемеге өту 👇
+            </a>
+
         </div>
     </div>
 
@@ -250,19 +277,15 @@
             <div class="donate-card reveal">
                  <div class="card-content">
                     <h3>Kaspi</h3>
-                    
                     <p id="txt-qr">Суретке түсіріңіз (QR):</p>
                     <div class="qr-box">
                         <img src="kaspi.jpg" width="100%" style="border-radius: 15px;">
                     </div>
-
                     <div class="separator"><span>немесе / или</span></div>
-
                     <p id="txt-kaspi-link">Сілтеме арқылы төлеу:</p>
                     <a href="https://kaspi.kz/pay/DUMKUniversla?subservice_id=23997&region_id=39&started_from=share" class="btn-gold btn-link" target="_blank" onclick="showThankYou(null)">
                         📲 Kaspi-мен төлеу
                     </a>
-
                 </div>
             </div>
 
@@ -300,14 +323,16 @@
                 aboutDesc: `<p><span class="highlight-gold">"Парасат" мешіті</span> — Атырау қаласының рухани жүрегі, имандылық пен ғылымның алтын көпірі. Бұл — жай ғана ғимарат емес, Алланың жердегі үйі.</p><p>Біздің мақсатымыз — қоғамда <span class="highlight-gold">бірлік пен татулықты</span> нығайту, жастарды имандылыққа тәрбиелеу және мұқтаж жандарға қол ұшын созу.</p><p>Әрбір жұма күні білікті имамдарымыз жүрекке жылы уағыздар айтып, жамағаттың рухани сұранысын өтейді. Есігіміз баршаңызға ашық!</p>`,
                 addr: "Атырау, К. Ахмедияров 5 (Картаны ашу)", donateHead: "Садақа жасау", 
                 txtHalyk: "Суретке түсіріңіз", btnHalyk: "Сканерлеу", 
-                txtKaspiLink: "Сілтеме арқылы төлеу:", txtQr: "Суретке түсіріңіз (QR):", thanksTitle: "Алла разы болсын!", thanksText: "Садақаңыз қабыл болсын."
+                txtKaspiLink: "Сілтеме арқылы төлеу:", txtQr: "Суретке түсіріңіз (QR):", thanksTitle: "Алла разы болсын!", thanksText: "Садақаңыз қабыл болсын.",
+                btnHero: "Сілтемеге өту 👇"
             },
             ru: {
                 aboutHead: "О нас",
                 aboutDesc: `<p><span class="highlight-gold">Мечеть «Парасат»</span> — это духовное сердце Атырау, золотой мост веры и знания. Это не просто здание, это дом Аллаха на земле.</p><p>Наша цель — укреплять <span class="highlight-gold">единство и согласие</span> в обществе, воспитывать молодежь в духе веры и протягивать руку помощи нуждающимся.</p><p>Каждую пятницу наши квалифицированные имамы читают проникновенные проповеди, удовлетворяя духовные потребности джамаата. Наши двери открыты для всех!</p>`,
                 addr: "Атырау, ул. К. Ахмедиярова 5 (Открыть карту)", donateHead: "Пожертвование", 
                 txtHalyk: "Сканируйте фото", btnHalyk: "Сканировать", 
-                txtKaspiLink: "Оплата по ссылке:", txtQr: "Сканируйте фото (QR):", thanksTitle: "Пусть Аллах будет доволен!", thanksText: "Пусть ваша садака будет принята."
+                txtKaspiLink: "Оплата по ссылке:", txtQr: "Сканируйте фото (QR):", thanksTitle: "Пусть Аллах будет доволен!", thanksText: "Пусть ваша садака будет принята.",
+                btnHero: "Перейти к ссылке 👇"
             }
         };
         function toggleLang() {
@@ -315,6 +340,7 @@
             document.getElementById('about-head').innerText = t.aboutHead; document.getElementById('about-desc').innerHTML = t.aboutDesc; document.getElementById('addr-text').innerText = t.addr; document.getElementById('donate-head').innerText = t.donateHead; 
             document.getElementById('txt-halyk').innerText = t.txtHalyk; document.getElementById('btn-halyk').innerText = t.btnHalyk;
             document.getElementById('txt-kaspi-link').innerText = t.txtKaspiLink; document.getElementById('txt-qr').innerText = t.txtQr;
+            document.getElementById('btn-hero').innerText = t.btnHero;
             document.querySelector('#thankYouText h2').innerText = t.thanksTitle; document.querySelector('#thankYouText p').innerText = t.thanksText;
         }
     </script>
