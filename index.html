@@ -233,12 +233,19 @@
 
             <div class="donate-card reveal">
                  <div class="card-content">
-                    <h3>Kaspi QR</h3>
-                    <p id="txt-qr">Суретке түсіріңіз</p>
+                    <h3>Kaspi</h3>
+                    
+                    <p id="txt-kaspi-link">Сілтеме арқылы төлеу:</p>
+                    <a href="https://kaspi.kz/pay/DUMKUniversla?subservice_id=23997&region_id=39&started_from=share" class="btn-gold btn-link" target="_blank" onclick="showThankYou(null)">
+                        📲 Kaspi-мен төлеу
+                    </a>
+
+                    <div class="separator"><span>немесе / или</span></div>
+
+                    <p id="txt-qr">Суретке түсіріңіз (QR):</p>
                     <div class="qr-box">
                         <img src="kaspi.jpg" width="100%" style="border-radius: 15px;">
                     </div>
-                    <button class="btn-gold" onclick="showThankYou(null)" id="btn-scan">Сканерлеу</button>
                 </div>
             </div>
 
@@ -307,4 +314,5 @@ document.addEventListener('keydown', function(e) {
 });
 </script>
 </body>
+
 </html>
