@@ -6,58 +6,41 @@
     <title>Парасат Мешіті</title>
     <style>
         /* --- ЗАЩИТА --- */
-        * {
-            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
-            -webkit-user-drag: none;
-        }
+        * { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; -webkit-user-drag: none; }
         a, button, .donate-card, .address-link, .lang-switch { pointer-events: auto; }
 
         /* --- ЦВЕТА --- */
         :root {
-            --emerald: #004d2e;
-            --gold: #d4af37;
-            --bronze: #b38728;
-            --sand: #fdfcf5;
+            --emerald: #004d2e; --gold: #d4af37; --bronze: #b38728; --sand: #fdfcf5;
             --gold-gradient: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7);
         }
 
         body {
-            margin: 0; padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, serif;
+            margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, serif;
             background-color: var(--sand); color: #222; overflow-x: hidden;
             background-image: radial-gradient(circle at center, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
-            background-size: 100% 100%;
-            animation: bgPulse 10s infinite alternate;
+            background-size: 100% 100%; animation: bgPulse 10s infinite alternate;
         }
         @keyframes bgPulse { 0% { background-size: 100% 100%; } 100% { background-size: 110% 110%; } }
 
         /* --- КУРСОР --- */
         @media (hover: hover) {
-            .cursor-follower {
-                position: fixed; width: 30px; height: 30px; background: rgba(212, 175, 55, 0.4);
-                border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.1s ease-out;
-                filter: blur(5px); mix-blend-mode: screen;
-            }
+            .cursor-follower { position: fixed; width: 30px; height: 30px; background: rgba(212, 175, 55, 0.4); border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.1s ease-out; filter: blur(5px); mix-blend-mode: screen; }
         }
 
         /* --- БОРДЮРЫ --- */
         .ornament-border-top, .ornament-border-bottom {
-            height: 35px; width: 100%;
-            background-color: var(--bronze);
-            background-image: linear-gradient(135deg, var(--gold) 25%, transparent 25%), 
-                              linear-gradient(225deg, var(--gold) 25%, transparent 25%), 
-                              linear-gradient(45deg, var(--gold) 25%, transparent 25%), 
-                              linear-gradient(315deg, var(--gold) 25%, transparent 25%);
+            height: 35px; width: 100%; background-color: var(--bronze);
+            background-image: linear-gradient(135deg, var(--gold) 25%, transparent 25%), linear-gradient(225deg, var(--gold) 25%, transparent 25%), linear-gradient(45deg, var(--gold) 25%, transparent 25%), linear-gradient(315deg, var(--gold) 25%, transparent 25%);
             background-position: 10px 0; background-size: 20px 20px; opacity: 0.8;
         }
 
-        /* --- ВСЕ АНИМАЦИИ --- */
+        /* --- АНИМАЦИИ --- */
         @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes slideUp { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         @keyframes gentlePulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); box-shadow: 0 25px 50px rgba(212, 175, 55, 0.4); } 100% { transform: scale(1); } }
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
         @keyframes zoomHero { 0% { transform: scale(1); } 100% { transform: scale(1.2); } }
-        
         .reveal { opacity: 0; transform: translateY(50px); transition: all 1s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
@@ -89,7 +72,7 @@
         .logo span { font-size: 28px; color: var(--gold); }
         .lang-switch { border: 2px solid var(--gold); color: var(--emerald); background: none; padding: 6px 12px; border-radius: 15px; font-weight: bold; cursor: pointer; }
 
-        /* --- ГЕРОЙ (С АНИМАЦИЕЙ ФОТО) --- */
+        /* --- ГЕРОЙ --- */
         .hero {
             position: relative; height: 70vh; min-height: 500px;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
@@ -97,11 +80,8 @@
         }
         .hero-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('main.jpg'); 
-            background-size: cover; background-position: center;
-            filter: brightness(0.5); z-index: -1;
-            /* ВОТ АНИМАЦИЯ ПРИБЛИЖЕНИЯ (20 секунд) */
-            animation: zoomHero 20s infinite alternate linear;
+            background-image: url('main.jpg'); background-size: cover; background-position: center;
+            filter: brightness(0.5); z-index: -1; animation: zoomHero 20s infinite alternate linear;
         }
         .hero-content-wrapper { animation: slideUp 1.5s ease-out 0.5s backwards; }
         .bismillah { font-family: serif; color: var(--gold); font-size: 36px; margin-bottom: 25px; text-shadow: 0 2px 15px black; }
@@ -115,12 +95,10 @@
         /* --- О НАС --- */
         .about-section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
         .about-grid { display: flex; gap: 50px; align-items: center; flex-wrap: wrap; }
-        
         .about-img-box {
             flex: 1; min-width: 300px; height: 450px;
             background-image: url('about.jpg'); background-size: cover; background-position: center;
-            border-radius: 200px 200px 30px 30px;
-            border: 6px solid var(--gold); animation: gentlePulse 5s infinite ease-in-out; 
+            border-radius: 200px 200px 30px 30px; border: 6px solid var(--gold); animation: gentlePulse 5s infinite ease-in-out; 
         }
         .about-text { flex: 1.2; min-width: 300px; }
         .about-text h2 { 
@@ -146,24 +124,36 @@
             background: white; width: 100%; max-width: 340px; border-radius: 35px; padding: 50px 25px;
             box-shadow: 0 20px 50px rgba(0, 77, 46, 0.15); border: 4px solid var(--gold);
             animation: float 7s ease-in-out infinite; position: relative; overflow: hidden;
+            display: flex; flex-direction: column; align-items: center;
         }
         .donate-card:nth-child(2) { animation-delay: 3.5s; }
         
+        .card-content { width: 100%; }
+
+        /* Стиль для QR коробки */
         .qr-box { 
-            width: 200px; height: 200px; background: #eee; margin: 0 auto 25px; 
+            width: 200px; height: 200px; background: #eee; margin: 15px auto; 
             display: flex; align-items: center; justify-content: center; 
-            border-radius: 25px; border: 4px dashed var(--emerald); 
-            font-weight: bold; color: var(--emerald); overflow: hidden;
+            border-radius: 25px; border: 4px dashed var(--emerald); overflow: hidden;
+            font-weight: bold; color: var(--emerald);
         }
         
         .btn-gold {
             display: block; width: 100%; padding: 20px 0;
             background: var(--gold-gradient); background-size: 200% auto;
             color: var(--emerald); font-weight: 900; text-decoration: none; border-radius: 50px;
-            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.5); border: none; cursor: pointer; font-size: 22px;
-            transition: 0.4s;
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.5); border: none; cursor: pointer; font-size: 18px;
+            transition: 0.4s; margin-top: 10px;
         }
         .btn-gold:hover { background-position: right center; transform: scale(1.05); }
+
+        /* Специальная кнопка-ссылка */
+        .btn-link {
+            text-decoration: none; display: flex; align-items: center; justify-content: center;
+        }
+
+        .separator { margin: 20px 0; border-top: 1px solid #ddd; position: relative; }
+        .separator span { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: white; padding: 0 10px; color: #999; font-size: 14px; }
 
         footer { background: var(--emerald); color: #e0e0e0; text-align: center; padding: 50px 20px; font-size: 18px; }
     </style>
@@ -283,36 +273,23 @@
                 aboutDesc: `<p><span class="highlight-gold">"Парасат" мешіті</span> — Атырау қаласының рухани жүрегі, имандылық пен ғылымның алтын көпірі. Бұл — жай ғана ғимарат емес, Алланың жердегі үйі.</p><p>Біздің мақсатымыз — қоғамда <span class="highlight-gold">бірлік пен татулықты</span> нығайту, жастарды имандылыққа тәрбиелеу және мұқтаж жандарға қол ұшын созу.</p><p>Әрбір жұма күні білікті имамдарымыз жүрекке жылы уағыздар айтып, жамағаттың рухани сұранысын өтейді. Есігіміз баршаңызға ашық!</p>`,
                 addr: "Атырау, К. Ахмедияров 5 (Картаны ашу)", donateHead: "Садақа жасау", 
                 txtHalyk: "Суретке түсіріңіз", btnHalyk: "Сканерлеу", 
-                txtQr: "Суретке түсіріңіз", btnScan: "Сканерлеу", thanksTitle: "Алла разы болсын!", thanksText: "Садақаңыз қабыл болсын."
+                txtKaspiLink: "Сілтеме арқылы төлеу:", txtQr: "Суретке түсіріңіз (QR):", thanksTitle: "Алла разы болсын!", thanksText: "Садақаңыз қабыл болсын."
             },
             ru: {
                 aboutHead: "О нас",
                 aboutDesc: `<p><span class="highlight-gold">Мечеть «Парасат»</span> — это духовное сердце Атырау, золотой мост веры и знания. Это не просто здание, это дом Аллаха на земле.</p><p>Наша цель — укреплять <span class="highlight-gold">единство и согласие</span> в обществе, воспитывать молодежь в духе веры и протягивать руку помощи нуждающимся.</p><p>Каждую пятницу наши квалифицированные имамы читают проникновенные проповеди, удовлетворяя духовные потребности джамаата. Наши двери открыты для всех!</p>`,
                 addr: "Атырау, ул. К. Ахмедиярова 5 (Открыть карту)", donateHead: "Пожертвование", 
                 txtHalyk: "Сканируйте фото", btnHalyk: "Сканировать", 
-                txtQr: "Сканируйте фото", btnScan: "Сканировать", thanksTitle: "Пусть Аллах будет доволен!", thanksText: "Пусть ваша садака будет принята."
+                txtKaspiLink: "Оплата по ссылке:", txtQr: "Сканируйте фото (QR):", thanksTitle: "Пусть Аллах будет доволен!", thanksText: "Пусть ваша садака будет принята."
             }
         };
         function toggleLang() {
             isKz = !isKz; const t = isKz ? texts.kz : texts.ru;
             document.getElementById('about-head').innerText = t.aboutHead; document.getElementById('about-desc').innerHTML = t.aboutDesc; document.getElementById('addr-text').innerText = t.addr; document.getElementById('donate-head').innerText = t.donateHead; 
             document.getElementById('txt-halyk').innerText = t.txtHalyk; document.getElementById('btn-halyk').innerText = t.btnHalyk;
-            document.getElementById('txt-qr').innerText = t.txtQr; document.getElementById('btn-scan').innerText = t.btnScan;
+            document.getElementById('txt-kaspi-link').innerText = t.txtKaspiLink; document.getElementById('txt-qr').innerText = t.txtQr;
             document.querySelector('#thankYouText h2').innerText = t.thanksTitle; document.querySelector('#thankYouText p').innerText = t.thanksText;
         }
     </script>
-</body><script>
-document.addEventListener('keydown', function(e) {
-    if (
-        (e.ctrlKey && ['c','u','s'].includes(e.key.toLowerCase())) ||
-        e.key === 'F12' ||
-        (e.ctrlKey && e.shiftKey && ['i','j','c'].includes(e.key.toLowerCase()))
-    ) {
-        e.preventDefault();
-        return false;
-    }
-});
-</script>
 </body>
-
 </html>
