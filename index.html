@@ -72,9 +72,9 @@
         .logo span { font-size: 28px; color: var(--gold); }
         .lang-switch { border: 2px solid var(--gold); color: var(--emerald); background: none; padding: 6px 12px; border-radius: 15px; font-weight: bold; cursor: pointer; }
 
-        /* --- ГЕРОЙ (ИЗМЕНЕНИЯ ТУТ) --- */
+        /* --- ГЕРОЙ --- */
         .hero {
-            position: relative; height: 75vh; min-height: 550px;
+            position: relative; height: 80vh; min-height: 600px;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center; color: white; overflow: hidden;
         }
@@ -89,24 +89,27 @@
         }
         .bismillah { font-family: serif; color: var(--gold); font-size: 36px; margin-bottom: 20px; text-shadow: 0 2px 15px black; }
         
-        /* НОВЫЙ КРАСИВЫЙ ШРИФТ ДЛЯ ЗАГОЛОВКА */
+        /* КРАСИВЫЙ ШРИФТ ЗАГОЛОВКА */
         .hero h1 {
-            font-family: 'Georgia', 'Times New Roman', serif; /* Классический красивый шрифт */
+            font-family: 'Georgia', 'Times New Roman', serif;
             font-size: 52px; font-weight: 900; text-transform: uppercase; margin: 0;
             border: 4px solid var(--gold); padding: 20px 40px;
             background: rgba(0, 77, 46, 0.7); backdrop-filter: blur(8px);
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            letter-spacing: 2px; /* Немного раздвинули буквы */
+            letter-spacing: 2px;
         }
 
         /* НОВЫЙ ТЕКСТ ПОД ЗАГОЛОВКОМ */
         .hero-subtitle {
-            color: var(--gold);
+            color: #fbf5b7; /* Светлое золото */
             font-size: 20px;
-            margin-top: 25px;
-            font-weight: 500;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.8); /* Тень для читаемости */
-            max-width: 90%; line-height: 1.5;
+            margin-top: 30px;
+            font-weight: 600;
+            text-shadow: 0 2px 8px rgba(0,0,0,1); /* Тень чтобы читалось на фото */
+            max-width: 90%; line-height: 1.6;
+            background: rgba(0,0,0,0.3); padding: 10px 20px; border-radius: 20px; /* Подложка */
+            backdrop-filter: blur(3px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
         }
 
         /* --- О НАС --- */
@@ -201,7 +204,10 @@
             
             <h1>ПАРАСАТ МЕШІТІ</h1>
             
-            <p class="hero-subtitle">Осы жұманың берекесі сіздің отбасыңызға болсын.<br>Садақа беру үшін сілтемеге өтіңіз.</p>
+            <p class="hero-subtitle">
+                Осы жұманың берекесі сіздің отбасыңызға болсын.<br>
+                Садақа беру үшін сілтемеге өтіңіз.
+            </p>
         </div>
     </div>
 
@@ -245,17 +251,18 @@
                  <div class="card-content">
                     <h3>Kaspi</h3>
                     
+                    <p id="txt-qr">Суретке түсіріңіз (QR):</p>
+                    <div class="qr-box">
+                        <img src="kaspi.jpg" width="100%" style="border-radius: 15px;">
+                    </div>
+
+                    <div class="separator"><span>немесе / или</span></div>
+
                     <p id="txt-kaspi-link">Сілтеме арқылы төлеу:</p>
                     <a href="https://kaspi.kz/pay/DUMKUniversla?subservice_id=23997&region_id=39&started_from=share" class="btn-gold btn-link" target="_blank" onclick="showThankYou(null)">
                         📲 Kaspi-мен төлеу
                     </a>
 
-                    <div class="separator"><span>немесе / или</span></div>
-
-                    <p id="txt-qr">Суретке түсіріңіз (QR):</p>
-                    <div class="qr-box">
-                        <img src="kaspi.jpg" width="100%" style="border-radius: 15px;">
-                    </div>
                 </div>
             </div>
 
