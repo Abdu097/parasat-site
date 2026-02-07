@@ -9,13 +9,13 @@
     <link rel="dns-prefetch" href="https://sajda.com">
 
     <meta property="og:title" content="Парасат Мешіті">
-    <meta property="og:description" content="Осы жұманың берекесі сіздің отбасыңызға болсын. Садақа беру.">
+    <meta property="og:description" content="Алланың берекесі сіздің отбасыңызға болсын. Садақа беру.">
     <meta property="og:image" content="https://abdu097.github.io/parasat-site/share.jpg">
     <meta property="og:type" content="website">
     
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Парасат Мешіті">
-    <meta name="twitter:description" content="Осы жұманың берекесі сіздің отбасыңызға болсын.">
+    <meta name="twitter:description" content="Алланың берекесі сіздің отбасыңызға болсын.">
     <meta name="twitter:image" content="https://abdu097.github.io/parasat-site/share.jpg">
 
     <style>
@@ -29,17 +29,12 @@
         
         * { 
             box-sizing: border-box; 
-            -webkit-user-select: none; 
-            -moz-user-select: none; 
-            -ms-user-select: none; 
-            user-select: none; 
-            -webkit-user-drag: none; 
-            -webkit-tap-highlight-color: transparent; 
+            -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; 
+            user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: transparent; 
         }
 
-        a, button, .donate-card, .address-link, .lang-switch, .hero-btn, .share-btn, .tasbih-btn, .reset-btn { 
-            pointer-events: auto; 
-            cursor: pointer; 
+        a, button, .donate-card, .address-link, .lang-switch, .hero-btn, .share-btn, .tasbih-btn, .reset-btn, .nav-link, .hadith-refresh-btn { 
+            pointer-events: auto; cursor: pointer; 
         }
 
         :root {
@@ -50,11 +45,11 @@
         body {
             margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, serif;
             background-color: var(--sand); color: #222; 
-            overflow-x: hidden; 
-            width: 100%;
+            overflow-x: hidden; width: 100%;
             background-image: radial-gradient(circle at center, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
             background-size: 100% 100%; animation: bgPulse 10s infinite alternate;
             transition: opacity 0.2s, filter 0.2s; 
+            padding-top: 130px; 
         }
 
         body.switching { opacity: 0; filter: blur(10px); transform: scale(0.99); }
@@ -66,11 +61,6 @@
             position: fixed; top: 0; left: 0; height: 5px; background: var(--emerald);
             z-index: 2000; width: 0%; transition: width 0.1s ease-out;
             box-shadow: 0 0 10px var(--gold);
-        }
-
-        /* Курсор только для ПК */
-        @media (hover: hover) and (pointer: fine) {
-            .cursor-follower { position: fixed; width: 30px; height: 30px; background: rgba(212, 175, 55, 0.4); border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.1s ease-out; filter: blur(5px); mix-blend-mode: screen; }
         }
 
         .ornament-border-top, .ornament-border-bottom {
@@ -85,6 +75,7 @@
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
         @keyframes zoomHero { 0% { transform: scale(1); } 100% { transform: scale(1.2); } }
         @keyframes pulseBtn { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
         .reveal { opacity: 0; transform: translateY(50px); transition: all 1s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
@@ -106,33 +97,48 @@
         .thank-you-icon { font-size: 60px; display: block; margin-bottom: 20px; animation: float 3s infinite; }
         .thank-you-text h2 { color: var(--emerald); margin: 0 0 15px; font-size: 26px; }
 
+        /* HEADER */
         header {
-            background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
-            padding: 15px 5%; position: sticky; top: 0; z-index: 1000;
-            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255,255,255,0.98); backdrop-filter: blur(10px);
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
             border-bottom: 3px solid var(--gold); animation: slideDown 1s ease-out;
-            width: 100%;
+            padding-bottom: 10px;
+        }
+        .header-top {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%;
         }
         .logo { font-size: clamp(18px, 4vw, 24px); font-weight: 800; color: var(--emerald); display: flex; align-items: center; gap: 8px; }
         .logo span { font-size: 1.4em; color: var(--gold); }
         
         .header-controls { display: flex; align-items: center; gap: 15px; }
-        
-        .lang-switch { border: 2px solid var(--gold); color: var(--emerald); background: none; padding: 6px 12px; border-radius: 15px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 14px; }
-        .lang-switch:active { transform: scale(0.9); background: var(--gold); color: white; }
+        .lang-switch { border: 2px solid var(--gold); color: var(--emerald); background: none; padding: 6px 12px; border-radius: 15px; font-weight: bold; font-size: 14px; }
+        .share-btn { background: none; border: none; font-size: 24px; padding: 0; }
 
-        .share-btn {
-            background: none; border: none; font-size: 24px; color: var(--emerald);
-            transition: transform 0.2s; padding: 0; display: flex; align-items: center;
+        /* МЕНЮ */
+        .nav-menu {
+            display: flex; justify-content: center; gap: 8px; 
+            padding: 0 10px;
+            overflow-x: auto; 
+            white-space: nowrap;
         }
-        .share-btn:active { transform: scale(0.8); }
+        .nav-menu::-webkit-scrollbar { display: none; }
+        
+        .nav-link {
+            text-decoration: none; color: var(--emerald); font-weight: bold; font-size: 14px;
+            padding: 8px 16px; border-radius: 20px; background: #f0f0f0;
+            border: 1px solid transparent; transition: 0.2s;
+        }
+        .nav-link:hover, .nav-link:active {
+            background: var(--gold); color: white;
+        }
 
         .hero {
             position: relative; 
-            min-height: 100vh;
+            min-height: 85vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center; color: white; overflow: hidden;
-            padding: 80px 20px 40px 20px;
+            padding: 40px 20px;
         }
         .hero-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -188,6 +194,8 @@
         }
         .hero-btn:hover { transform: scale(1.1); box-shadow: 0 15px 40px rgba(212, 175, 55, 0.8); }
 
+        section { scroll-margin-top: 150px; }
+
         .namaz-section { padding: 60px 20px; max-width: 900px; margin: 0 auto; text-align: center; }
         
         .btn-namaz {
@@ -201,19 +209,43 @@
         }
         .btn-namaz:hover { background: var(--emerald); color: white; transform: translateY(-5px); }
 
-        /* СТИЛИ ДЛЯ ТӘСБІ (ИСПРАВЛЕННЫЕ) */
+        /* ХАДИС */
+        .hadith-section {
+            padding: 40px 20px; max-width: 800px; margin: 0 auto; text-align: center;
+        }
+        .hadith-card {
+            background: white; border-radius: 20px; padding: 40px 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08); border: 2px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+        }
+        .hadith-icon { font-size: 40px; color: var(--gold); display: block; margin-bottom: 10px; opacity: 0.5; }
+        .arabic-text {
+            font-family: 'Amiri', serif; font-size: clamp(20px, 5vw, 28px); color: var(--emerald);
+            margin-bottom: 15px; line-height: 1.8;
+        }
+        .translation-text {
+            font-size: clamp(16px, 4vw, 20px); font-weight: 500; font-style: italic;
+            color: #444; margin-bottom: 20px; line-height: 1.6;
+        }
+        .hadith-source {
+            font-size: 14px; color: #888; text-transform: uppercase; font-weight: bold; margin-bottom: 25px;
+        }
+        .hadith-refresh-btn {
+            background: none; border: 2px solid var(--emerald); color: var(--emerald);
+            padding: 10px 20px; border-radius: 20px; font-weight: bold; font-size: 14px;
+            transition: 0.3s;
+        }
+        .hadith-refresh-btn:hover { background: var(--emerald); color: white; }
+        .fade-in { animation: fadeIn 0.5s ease-out; }
+
+        /* ТӘСБІ */
         .tasbih-section { 
             padding: 60px 20px; 
             text-align: center; 
             background-color: rgba(255,255,255,0.5); 
         }
-        /* Контейнер чтобы кнопка не улетала */
         .tasbih-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 25px; /* Отступ между кругом и кнопкой */
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 25px;
         }
         .tasbih-wrapper {
             display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
@@ -235,7 +267,7 @@
             -webkit-tap-highlight-color: transparent; outline: none; z-index: 2;
         }
         .reset-btn {
-            position: relative; /* ТЕПЕРЬ КНОПКА В ПОТОКЕ */
+            position: relative; 
             background: var(--gold); color: white; border: none;
             padding: 12px 30px; border-radius: 30px; font-weight: bold;
             box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
@@ -297,7 +329,9 @@
         .btn-gold {
             display: block; width: 100%; padding: 15px 0;
             background: var(--gold-gradient); background-size: 200% auto;
-            color: var(--emerald); font-weight: 900; text-decoration: none; border-radius: 50px;
+            color: var(--emerald); font-weight: 900; 
+            text-decoration: none !important;
+            border-radius: 50px;
             box-shadow: 0 15px 35px rgba(212, 175, 55, 0.5); border: none; cursor: pointer; font-size: 18px;
             transition: 0.4s; margin-top: 10px;
         }
@@ -311,7 +345,7 @@
 
         @media (max-width: 768px) {
             .about-img-box { height: 300px; border-radius: 100px 100px 20px 20px; }
-            .hero { padding-top: 100px; } 
+            .hero { padding-top: 20px; } 
             .about-grid { gap: 40px; }
             .tasbih-wrapper { width: 250px; height: 250px; } 
             .counter-display { font-size: 60px; }
@@ -321,8 +355,7 @@
 <body>
 
     <div id="progressBar"></div>
-    <div class="cursor-follower"></div>
-
+    
     <div class="thank-you-modal" id="thankYouModal">
         <div class="thank-you-content">
             <span class="thank-you-icon">🤲✨</span>
@@ -334,11 +367,19 @@
     </div>
 
     <header>
-        <div class="logo"><span>☪</span> ПАРАСАТ</div>
-        <div class="header-controls">
-            <button class="share-btn" onclick="shareSite()" title="Поделиться / Бөлісу">📤</button>
-            <button class="lang-switch" onclick="toggleLang()">🇰🇿 / 🇷🇺</button>
+        <div class="header-top">
+            <div class="logo"><span>☪</span> ПАРАСАТ</div>
+            <div class="header-controls">
+                <button class="share-btn" onclick="shareSite()" title="Поделиться / Бөлісу">📤</button>
+                <button class="lang-switch" onclick="toggleLang()">🇰🇿 / 🇷🇺</button>
+            </div>
         </div>
+        <nav class="nav-menu">
+            <a href="#about" class="nav-link" id="nav-about">Біз туралы</a>
+            <a href="#namaz" class="nav-link" id="nav-namaz">Намаз уақыты</a>
+            <a href="#tasbih" class="nav-link" id="nav-tasbih">Тәсбі</a>
+            <a href="#hadith" class="nav-link" id="nav-hadith">Даналық</a>
+        </nav>
     </header>
 
     <div class="hero">
@@ -347,7 +388,7 @@
             <div class="bismillah">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
             <h1>ПАРАСАТ МЕШІТІ</h1>
             <p class="hero-subtitle" id="hero-subtitle">
-                Осы жұманың берекесі сіздің отбасыңызға болсын.<br>
+                Алланың берекесі сіздің отбасыңызға болсын.<br>
                 Садақа беру үшін сілтемеге өтіңіз.
             </p>
             <a href="#donate" class="hero-btn" id="btn-hero">Сілтемеге өту 👇</a>
@@ -356,7 +397,25 @@
 
     <div class="ornament-border-top"></div>
     
-    <section class="namaz-section reveal">
+    <section class="about-section reveal" id="about">
+        <div class="about-grid">
+            <div class="about-img-box"></div>
+            <div class="about-text">
+                <h2 id="about-head">Біз туралы</h2>
+                <div id="about-desc">
+                    <p>«Парасат» мешіті — Атырау қаласының рухани жүрегі, имандылық пен бірліктің алтын көпірі. Бұл — жай ғана ғимарат емес, Алланың жердегі құлшылық сарайы, жақсылық пен ізгіліктің бастауы.</p>
+                    <p>Біздің мақсатымыз — қоғамда татулықты нығайту, жастарды имандылыққа тәрбиелеу, дәстүрлі құндылықты дәріптеу және мұқтаж жандарға қол ұшын созу. Мешіт қабырғасында күнделікті бес уақыт намаз оқылып, қасиетті Құран аяттары жаңғырады. Есігіміз баршаңызға ашық!</p>
+                </div>
+                <a href="https://2gis.kz/atyrau/firm/70000001100040750" target="_blank" class="address-link">
+                    📍 <span id="addr-text">Атырау, К. Ахмедияров 5 (Картаны ашу)</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="ornament-border-bottom"></div>
+
+    <section class="namaz-section reveal" id="namaz">
         <h2 class="section-title" id="namaz-head" style="margin-bottom: 30px;">Намаз уақыты</h2>
         <a id="btn-namaz" href="https://sajda.com/kk/prayer-times/kazakhstan/atyrau-oblisi-atyrau/610529" class="btn-namaz">
             📅 Кестені ашу (Sajda.com)
@@ -365,8 +424,8 @@
 
     <div class="ornament-border-bottom"></div>
 
-    <section class="tasbih-section reveal">
-        <h2 class="section-title" id="tasbih-head">Електронды Тәсбі</h2>
+    <section class="tasbih-section reveal" id="tasbih">
+        <h2 class="section-title" id="tasbih-head">Электронды Тәсбі</h2>
         <div class="tasbih-container">
             <div class="tasbih-wrapper" onclick="countTasbih()">
                 <div class="counter-display" id="tasbihCount">0</div>
@@ -377,22 +436,17 @@
             </button>
         </div>
     </section>
-    
+
     <div class="ornament-border-bottom"></div>
-    
-    <section class="about-section">
-        <div class="about-grid">
-            <div class="about-img-box reveal"></div>
-            <div class="about-text reveal">
-                <h2 id="about-head">Біз туралы</h2>
-                <div id="about-desc">
-                    <p>«Парасат» мешіті — Атырау қаласының рухани жүрегі, имандылық пен бірліктің алтын көпірі. Бұл — жай ғана ғимарат емес, Алланың жердегі құлшылық сарайы, жақсылық пен ізгіліктің бастауы.</p>
-                    <p>Біздің мақсатымыз — қоғамда татулықты нығайту, жастарды имандылыққа тәрбиелеу, дәстүрлі құндылықты дәріптеу және мұқтаж жандарға қол ұшын созу. Мешіт қабырғасында күнделікті бес уақыт намаз оқылып, қасиетті Құран аяттары жаңғырады. Есігіміз баршаңызға ашық!</p>
-                </div>
-                <a href="https://2gis.kz/atyrau/firm/70000001100040750" target="_blank" class="address-link">
-                    📍 <span id="addr-text">Атырау, К. Ахмедияров 5 (Картаны ашу)</span>
-                </a>
-            </div>
+
+    <section class="hadith-section reveal" id="hadith">
+        <h2 class="section-title" id="hadith-head">Даналық бұлағы</h2>
+        <div class="hadith-card">
+            <span class="hadith-icon">❝</span>
+            <p class="arabic-text" id="hadith-arabic"></p>
+            <p class="translation-text" id="hadith-text"></p>
+            <p class="hadith-source" id="hadith-source"></p>
+            <button class="hadith-refresh-btn" onclick="updateHadith()" id="btn-hadith-next">Келесі хадис ➜</button>
         </div>
     </section>
     
@@ -442,7 +496,77 @@
             }, 3500);
         }
 
-        // ЛОГИКА ТӘСБІ (TASBIH)
+        const hadithData = [
+            {
+                arabic: "إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ",
+                kz: "«Шын мәнінде амалдар ниетке байланысты.»",
+                ru: "«Поистине, дела оцениваются только по намерениям.»",
+                source: "(Бухари)"
+            },
+            {
+                arabic: "لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لِأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ",
+                kz: "«Сіздердің ешбіріңіз өзіне қалағанды бауырына қаламайынша, толық иман келтірген болып саналмайды.»",
+                ru: "«Не уверует никто из вас до тех пор, пока не станет желать своему брату того же, чего желает самому себе.»",
+                source: "(Бухари)"
+            },
+            {
+                arabic: "خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ",
+                kz: "«Сендердің ең жақсыларың – Құранды үйреніп, оны басқаларға үйреткендерің.»",
+                ru: "«Лучшим из вас является тот, кто изучает Коран и обучает ему других.»",
+                source: "(Бухари)"
+            },
+            {
+                arabic: "الْكَلِمَةُ الطَّيِّبَةُ صَدَقَةٌ",
+                kz: "«Жақсы сөз – садақа.»",
+                ru: "«Доброе слово — это садака.»",
+                source: "(Бухари)"
+            },
+            {
+                arabic: "لَيْسَ الشَّدِيدُ بِالصُّرَعَةِ، إِنَّمَا الشَّدِيدُ الَّذِي يَمْلِكُ نَفْسَهُ عِنْدَ الْغَضَبِ",
+                kz: "«Нағыз мықты – күресте жеңген емес, ашуланғанда өзін ұстай білген адам.»",
+                ru: "«Силен не тот, кто побеждает в борьбе, а тот, кто управляет собой в гневе.»",
+                source: "(Бухари)"
+            },
+            {
+                arabic: "إِنَّ مِنْ خِيَارِكُمْ أَحْسَنَكُمْ أَخْلَاقًا",
+                kz: "«Сендердің ең жақсыларың – мінез-құлқы ең көркем болғандарың.»",
+                ru: "«Лучшие из вас — те, у кого лучший нрав.»",
+                source: "(Бухари)"
+            },
+            {
+                 arabic: "الْحَيَاءُ مِنَ الْإِيمَانِ",
+                 kz: "«Ұят – иманның бір бөлігі.»",
+                 ru: "«Стыдливость — часть веры.»",
+                 source: "(Бухари)"
+            }
+        ];
+
+        let currentHadithIndex = 0;
+
+        function updateHadith() {
+            let newIndex;
+            do {
+                newIndex = Math.floor(Math.random() * hadithData.length);
+            } while (newIndex === currentHadithIndex);
+            
+            currentHadithIndex = newIndex;
+            const item = hadithData[currentHadithIndex];
+
+            const card = document.querySelector('.hadith-card');
+            card.classList.remove('fade-in');
+            void card.offsetWidth; 
+            card.classList.add('fade-in');
+
+            document.getElementById('hadith-arabic').innerText = item.arabic;
+            document.getElementById('hadith-source').innerText = item.source;
+            
+            if (isKz) {
+                document.getElementById('hadith-text').innerText = item.kz;
+            } else {
+                document.getElementById('hadith-text').innerText = item.ru;
+            }
+        }
+
         let count = parseInt(localStorage.getItem('tasbihCount')) || 0;
         const display = document.getElementById('tasbihCount');
         display.innerText = count;
@@ -451,11 +575,7 @@
             count++;
             display.innerText = count;
             localStorage.setItem('tasbihCount', count);
-            
-            // Вибрация (если поддерживается)
             if (navigator.vibrate) navigator.vibrate(40);
-            
-            // Анимация нажатия
             const wrapper = document.querySelector('.tasbih-wrapper');
             wrapper.style.transform = "scale(0.95)";
             setTimeout(() => wrapper.style.transform = "scale(1)", 100);
@@ -473,7 +593,7 @@
             if (navigator.share) {
                 navigator.share({
                     title: 'Парасат Мешіті',
-                    text: 'Осы жұманың берекесі сіздің отбасыңызға болсын. Садақа беру:',
+                    text: 'Алланың берекесі сіздің отбасыңызға болсын. Садақа беру:',
                     url: window.location.href
                 }).catch(console.error);
             } else {
@@ -489,18 +609,20 @@
             document.getElementById("progressBar").style.width = scrolled + "%";
         };
 
-        const cursor = document.querySelector('.cursor-follower');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.transform = `translate3d(${e.clientX - 15}px, ${e.clientY - 15}px, 0)`;
-        });
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
         }, { threshold: 0.15 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        let isKz = true;
-        
+        // LOCALSTORAGE: ЯЗЫКТЫ САҚТАУ
+        let savedLang = localStorage.getItem('siteLang');
+        let isKz = (savedLang === null) ? true : (savedLang === 'kz');
+
+        // Егер "ru" сақталған болса, сайт ашылғанда бірден ауыстыру
+        if (!isKz) {
+            updateTextContent();
+        }
+
         const texts = {
             kz: {
                 aboutHead: "Біз туралы",
@@ -514,11 +636,18 @@
                 btnNamaz: "📅 Кестені ашу (Sajda.com)",
                 linkNamaz: "https://sajda.com/kk/prayer-times/kazakhstan/atyrau-oblisi-atyrau/610529",
                 
-                heroSubtitle: "Осы жұманың берекесі сіздің отбасыңызға болсын.<br>Садақа беру үшін сілтемеге өтіңіз.",
+                heroSubtitle: "Алланың берекесі сіздің отбасыңызға болсын.<br>Садақа беру үшін сілтемеге өтіңіз.",
                 
-                // Тәсбі
                 tasbihHead: "Электронды Тәсбі",
-                resetText: "Нөлдеу"
+                resetText: "Нөлдеу",
+                
+                hadithHead: "Даналық бұлағы",
+                btnHadithNext: "Келесі хадис ➜",
+
+                navNamaz: "Намаз уақыты",
+                navHadith: "Даналық",
+                navTasbih: "Тәсбі",
+                navAbout: "Біз туралы"
             },
             ru: {
                 aboutHead: "О нас",
@@ -532,40 +661,65 @@
                 btnNamaz: "📅 Открыть расписание (Sajda.com)",
                 linkNamaz: "https://sajda.com/ru/prayer-times/kazakhstan/atyrau-oblisi-atyrau/610529",
                 
-                heroSubtitle: "Пусть благословение этой пятницы будет с вашей семьей.<br>Нажмите ниже, чтобы дать садака.",
+                heroSubtitle: "Пусть благословение Аллаха будет с вашей семьей.<br>Нажмите ниже, чтобы дать садака.",
 
-                // Тасбих
                 tasbihHead: "Электронный тасбих",
-                resetText: "Сбросить"
+                resetText: "Сбросить",
+                
+                hadithHead: "Источник мудрости",
+                btnHadithNext: "Следующий хадис ➜",
+
+                navNamaz: "Время намаза",
+                navHadith: "Мудрость",
+                navTasbih: "Тасбих",
+                navAbout: "О нас"
             }
         };
+
+        // Бөлек функция жасадық, оны toggleLang-та да, жүктегенде де шақырамыз
+        function updateTextContent() {
+            const t = isKz ? texts.kz : texts.ru;
+            
+            document.getElementById('about-head').innerText = t.aboutHead; document.getElementById('about-desc').innerHTML = t.aboutDesc; document.getElementById('addr-text').innerText = t.addr; document.getElementById('donate-head').innerText = t.donateHead; 
+            document.getElementById('txt-halyk').innerText = t.txtHalyk; document.getElementById('btn-halyk').innerText = t.btnHalyk;
+            document.getElementById('txt-kaspi-link').innerText = t.txtKaspiLink; document.getElementById('txt-qr').innerText = t.txtQr;
+            document.getElementById('btn-hero').innerText = t.btnHero;
+            document.querySelector('#thankYouText h2').innerText = t.thanksTitle; document.querySelector('#thankYouText p').innerText = t.thanksText;
+
+            document.getElementById('namaz-head').innerText = t.namazHead;
+            const namazBtn = document.getElementById('btn-namaz');
+            namazBtn.innerText = t.btnNamaz;
+            namazBtn.href = t.linkNamaz;
+
+            document.getElementById('hero-subtitle').innerHTML = t.heroSubtitle;
+            
+            document.getElementById('tasbih-head').innerText = t.tasbihHead;
+            document.getElementById('reset-text').innerText = t.resetText;
+
+            document.getElementById('hadith-head').innerText = t.hadithHead;
+            document.getElementById('btn-hadith-next').innerText = t.btnHadithNext;
+            
+            // Жаңарған тілмен хадисті жаңарту
+            updateHadith(); 
+
+            document.getElementById('nav-namaz').innerText = t.navNamaz;
+            document.getElementById('nav-hadith').innerText = t.navHadith;
+            document.getElementById('nav-tasbih').innerText = t.navTasbih;
+            document.getElementById('nav-about').innerText = t.navAbout;
+        }
 
         function toggleLang() {
             document.body.classList.add('switching');
             setTimeout(() => {
-                isKz = !isKz; const t = isKz ? texts.kz : texts.ru;
-                
-                document.getElementById('about-head').innerText = t.aboutHead; document.getElementById('about-desc').innerHTML = t.aboutDesc; document.getElementById('addr-text').innerText = t.addr; document.getElementById('donate-head').innerText = t.donateHead; 
-                document.getElementById('txt-halyk').innerText = t.txtHalyk; document.getElementById('btn-halyk').innerText = t.btnHalyk;
-                document.getElementById('txt-kaspi-link').innerText = t.txtKaspiLink; document.getElementById('txt-qr').innerText = t.txtQr;
-                document.getElementById('btn-hero').innerText = t.btnHero;
-                document.querySelector('#thankYouText h2').innerText = t.thanksTitle; document.querySelector('#thankYouText p').innerText = t.thanksText;
-
-                document.getElementById('namaz-head').innerText = t.namazHead;
-                const namazBtn = document.getElementById('btn-namaz');
-                namazBtn.innerText = t.btnNamaz;
-                namazBtn.href = t.linkNamaz;
-
-                document.getElementById('hero-subtitle').innerHTML = t.heroSubtitle;
-                
-                // Перевод Тәсбі
-                document.getElementById('tasbih-head').innerText = t.tasbihHead;
-                document.getElementById('reset-text').innerText = t.resetText;
-
+                isKz = !isKz; 
+                localStorage.setItem('siteLang', isKz ? 'kz' : 'ru'); // ЯЗЫКТЫ САҚТАУ
+                updateTextContent();
                 document.body.classList.remove('switching');
             }, 250); 
         }
+
+        // Бастапқы іске қосу
+        updateHadith();
     </script>
 </body>
 </html>
-
