@@ -37,7 +37,7 @@
             -webkit-tap-highlight-color: transparent; 
         }
 
-        a, button, .donate-card, .address-link, .lang-switch, .hero-btn, .share-btn { 
+        a, button, .donate-card, .address-link, .lang-switch, .hero-btn, .share-btn, .tasbih-btn, .reset-btn { 
             pointer-events: auto; 
             cursor: pointer; 
         }
@@ -61,15 +61,10 @@
 
         @keyframes bgPulse { 0% { background-size: 100% 100%; } 100% { background-size: 110% 110%; } }
 
-        /* ЗЕЛЕНАЯ ПОЛОСА ПРОКРУТКИ СВЕРХУ */
+        /* ЗЕЛЕНАЯ ПОЛОСА ПРОКРУТКИ */
         #progressBar {
-            position: fixed;
-            top: 0; left: 0;
-            height: 5px;
-            background: var(--emerald);
-            z-index: 2000;
-            width: 0%;
-            transition: width 0.1s ease-out;
+            position: fixed; top: 0; left: 0; height: 5px; background: var(--emerald);
+            z-index: 2000; width: 0%; transition: width 0.1s ease-out;
             box-shadow: 0 0 10px var(--gold);
         }
 
@@ -121,7 +116,6 @@
         .logo { font-size: clamp(18px, 4vw, 24px); font-weight: 800; color: var(--emerald); display: flex; align-items: center; gap: 8px; }
         .logo span { font-size: 1.4em; color: var(--gold); }
         
-        /* ГРУППА КНОПОК В ШАПКЕ */
         .header-controls { display: flex; align-items: center; gap: 15px; }
         
         .lang-switch { border: 2px solid var(--gold); color: var(--emerald); background: none; padding: 6px 12px; border-radius: 15px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 14px; }
@@ -207,6 +201,49 @@
         }
         .btn-namaz:hover { background: var(--emerald); color: white; transform: translateY(-5px); }
 
+        /* СТИЛИ ДЛЯ ТӘСБІ (ИСПРАВЛЕННЫЕ) */
+        .tasbih-section { 
+            padding: 60px 20px; 
+            text-align: center; 
+            background-color: rgba(255,255,255,0.5); 
+        }
+        /* Контейнер чтобы кнопка не улетала */
+        .tasbih-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 25px; /* Отступ между кругом и кнопкой */
+        }
+        .tasbih-wrapper {
+            display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 40px; border-radius: 50%; border: 6px solid var(--gold);
+            background: white; box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            width: 300px; height: 300px; 
+            position: relative; transition: transform 0.1s;
+        }
+        .tasbih-wrapper:active { transform: scale(0.98); }
+
+        .counter-display {
+            font-size: 80px; font-weight: 900; color: var(--emerald);
+            font-family: 'Courier New', monospace;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        }
+        .tasbih-btn {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: transparent; border: none; border-radius: 50%;
+            -webkit-tap-highlight-color: transparent; outline: none; z-index: 2;
+        }
+        .reset-btn {
+            position: relative; /* ТЕПЕРЬ КНОПКА В ПОТОКЕ */
+            background: var(--gold); color: white; border: none;
+            padding: 12px 30px; border-radius: 30px; font-weight: bold;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+            font-size: 16px; display: flex; align-items: center; gap: 8px; z-index: 3;
+            transition: 0.2s;
+        }
+        .reset-btn:active { transform: scale(0.95); background: var(--bronze); }
+
         .about-section { padding: 60px 20px; max-width: 1100px; margin: 0 auto; }
         .about-grid { display: flex; gap: 30px; align-items: center; flex-wrap: wrap; }
         
@@ -276,13 +313,14 @@
             .about-img-box { height: 300px; border-radius: 100px 100px 20px 20px; }
             .hero { padding-top: 100px; } 
             .about-grid { gap: 40px; }
+            .tasbih-wrapper { width: 250px; height: 250px; } 
+            .counter-display { font-size: 60px; }
         }
     </style>
 </head>
 <body>
 
     <div id="progressBar"></div>
-
     <div class="cursor-follower"></div>
 
     <div class="thank-you-modal" id="thankYouModal">
@@ -297,11 +335,8 @@
 
     <header>
         <div class="logo"><span>☪</span> ПАРАСАТ</div>
-        
         <div class="header-controls">
-            <button class="share-btn" onclick="shareSite()" title="Поделиться / Бөлісу">
-                📤
-            </button>
+            <button class="share-btn" onclick="shareSite()" title="Поделиться / Бөлісу">📤</button>
             <button class="lang-switch" onclick="toggleLang()">🇰🇿 / 🇷🇺</button>
         </div>
     </header>
@@ -310,18 +345,12 @@
         <div class="hero-bg"></div>
         <div class="hero-content-wrapper">
             <div class="bismillah">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
-            
             <h1>ПАРАСАТ МЕШІТІ</h1>
-            
             <p class="hero-subtitle" id="hero-subtitle">
                 Осы жұманың берекесі сіздің отбасыңызға болсын.<br>
                 Садақа беру үшін сілтемеге өтіңіз.
             </p>
-
-            <a href="#donate" class="hero-btn" id="btn-hero">
-                Сілтемеге өту 👇
-            </a>
-
+            <a href="#donate" class="hero-btn" id="btn-hero">Сілтемеге өту 👇</a>
         </div>
     </div>
 
@@ -335,18 +364,31 @@
     </section>
 
     <div class="ornament-border-bottom"></div>
+
+    <section class="tasbih-section reveal">
+        <h2 class="section-title" id="tasbih-head">Електронды Тәсбі</h2>
+        <div class="tasbih-container">
+            <div class="tasbih-wrapper" onclick="countTasbih()">
+                <div class="counter-display" id="tasbihCount">0</div>
+                <button class="tasbih-btn" aria-label="Count"></button>
+            </div>
+            <button class="reset-btn" onclick="resetTasbih()">
+                <span id="reset-text">Нөлдеу</span> ↺
+            </button>
+        </div>
+    </section>
+    
+    <div class="ornament-border-bottom"></div>
     
     <section class="about-section">
         <div class="about-grid">
             <div class="about-img-box reveal"></div>
             <div class="about-text reveal">
                 <h2 id="about-head">Біз туралы</h2>
-                
                 <div id="about-desc">
                     <p>«Парасат» мешіті — Атырау қаласының рухани жүрегі, имандылық пен бірліктің алтын көпірі. Бұл — жай ғана ғимарат емес, Алланың жердегі құлшылық сарайы, жақсылық пен ізгіліктің бастауы.</p>
                     <p>Біздің мақсатымыз — қоғамда татулықты нығайту, жастарды имандылыққа тәрбиелеу, дәстүрлі құндылықты дәріптеу және мұқтаж жандарға қол ұшын созу. Мешіт қабырғасында күнделікті бес уақыт намаз оқылып, қасиетті Құран аяттары жаңғырады. Есігіміз баршаңызға ашық!</p>
                 </div>
-                
                 <a href="https://2gis.kz/atyrau/firm/70000001100040750" target="_blank" class="address-link">
                     📍 <span id="addr-text">Атырау, К. Ахмедияров 5 (Картаны ашу)</span>
                 </a>
@@ -359,7 +401,6 @@
     <section class="donate-section" id="donate">
         <h2 class="section-title reveal" id="donate-head">Садақа жасау</h2>
         <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-            
             <div class="donate-card reveal">
                  <div class="card-content">
                     <h3>Kaspi</h3>
@@ -374,7 +415,6 @@
                     </a>
                 </div>
             </div>
-
             <div class="donate-card reveal">
                 <div class="card-content">
                     <h3>Halyk QR</h3>
@@ -385,7 +425,6 @@
                     <button class="btn-gold" onclick="showThankYou(null)" id="btn-halyk">Сканерлеу</button>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -403,23 +442,46 @@
             }, 3500);
         }
 
-        // Логика "Поделиться"
+        // ЛОГИКА ТӘСБІ (TASBIH)
+        let count = parseInt(localStorage.getItem('tasbihCount')) || 0;
+        const display = document.getElementById('tasbihCount');
+        display.innerText = count;
+
+        function countTasbih() {
+            count++;
+            display.innerText = count;
+            localStorage.setItem('tasbihCount', count);
+            
+            // Вибрация (если поддерживается)
+            if (navigator.vibrate) navigator.vibrate(40);
+            
+            // Анимация нажатия
+            const wrapper = document.querySelector('.tasbih-wrapper');
+            wrapper.style.transform = "scale(0.95)";
+            setTimeout(() => wrapper.style.transform = "scale(1)", 100);
+        }
+
+        function resetTasbih() {
+            if(confirm(isKz ? "Тәсбіні нөлдеу керек пе?" : "Сбросить счетчик?")) {
+                count = 0;
+                display.innerText = count;
+                localStorage.setItem('tasbihCount', count);
+            }
+        }
+
         function shareSite() {
             if (navigator.share) {
                 navigator.share({
                     title: 'Парасат Мешіті',
                     text: 'Осы жұманың берекесі сіздің отбасыңызға болсын. Садақа беру:',
                     url: window.location.href
-                })
-                .catch(console.error);
+                }).catch(console.error);
             } else {
-                // Если браузер не поддерживает (например на ПК), просто копируем ссылку
                 navigator.clipboard.writeText(window.location.href);
                 alert("Сілтеме көшірілді! / Ссылка скопирована!");
             }
         }
 
-        // Логика зеленой полосы прокрутки
         window.onscroll = function() {
             let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -452,7 +514,11 @@
                 btnNamaz: "📅 Кестені ашу (Sajda.com)",
                 linkNamaz: "https://sajda.com/kk/prayer-times/kazakhstan/atyrau-oblisi-atyrau/610529",
                 
-                heroSubtitle: "Осы жұманың берекесі сіздің отбасыңызға болсын.<br>Садақа беру үшін сілтемеге өтіңіз."
+                heroSubtitle: "Осы жұманың берекесі сіздің отбасыңызға болсын.<br>Садақа беру үшін сілтемеге өтіңіз.",
+                
+                // Тәсбі
+                tasbihHead: "Електронды Тәсбі",
+                resetText: "Нөлдеу"
             },
             ru: {
                 aboutHead: "О нас",
@@ -466,13 +532,16 @@
                 btnNamaz: "📅 Открыть расписание (Sajda.com)",
                 linkNamaz: "https://sajda.com/ru/prayer-times/kazakhstan/atyrau-oblisi-atyrau/610529",
                 
-                heroSubtitle: "Пусть благословение этой пятницы будет с вашей семьей.<br>Нажмите ниже, чтобы дать садака."
+                heroSubtitle: "Пусть благословение этой пятницы будет с вашей семьей.<br>Нажмите ниже, чтобы дать садака.",
+
+                // Тасбих
+                tasbihHead: "Электронный тасбих",
+                resetText: "Сбросить"
             }
         };
 
         function toggleLang() {
             document.body.classList.add('switching');
-
             setTimeout(() => {
                 isKz = !isKz; const t = isKz ? texts.kz : texts.ru;
                 
@@ -488,6 +557,10 @@
                 namazBtn.href = t.linkNamaz;
 
                 document.getElementById('hero-subtitle').innerHTML = t.heroSubtitle;
+                
+                // Перевод Тәсбі
+                document.getElementById('tasbih-head').innerText = t.tasbihHead;
+                document.getElementById('reset-text').innerText = t.resetText;
 
                 document.body.classList.remove('switching');
             }, 250); 
